@@ -9,11 +9,17 @@ k=7;
 Import_Images
 testIm=??; % some test image 
 
+%For the PCD method, it must be predefined in advance how many eigenvalues
+%will be used (as opposed to ignored). This value is stored in the variable c.
+
+%c = 13;
+
 %% Initialisation
 if strcmp(method,'intensity')
    [mu,trainFt]=intInsty(images);
 else 
-   [V,trainFt]=intPCD(images); % needs edited 
+   [V,trainFt]=intPCD(images, c); % needs edited 
+	%An extra input is required for intPCD. I've called this input c for now. 
 end 
 
 %% Interpretation 
@@ -26,10 +32,16 @@ if strcmp(method,'intensity')
 else 
    % PCD 
    testIm=V'*testIm; % change to take acount of multiple images at once 
+	%I don't have the shape of V correct yet.
 end 
 
 % Now send into knnsearch 
-[IDX,~]=knnsearch(trainFT,testIm,'k'); % check correct usage 
+
+%In order to make k an input for knnsearch, you must first place the 
+%string 'k' in order to signal that you aren't merely using the default 
+%value. In addition though, you must define the value itself, which is
+%contained in the variable k as opposed to in the string 'k'.
+[IDX,~]=knnsearch(trainFT,testIm,'k', k); % check correct usage 
 % outputs the index of the k nearest neighbours in trainFT. 
 
 % We now identify the label of the k-nearest neighbours 
