@@ -1,9 +1,11 @@
 %% Main 
 
 % user inputs 
-user_inputs.method='other';  
-user_inputs.k=1; 
-trainingSetSize=100; % number of images in the training set 
+
+user_inputs.method='intensity';  
+user_inputs.k=5; 
+trainingSetSize=200; % number of images in the training set 
+
 %For the PCD method, it must be predefined in advance how many eigenvalues
 %will be used (as opposed to ignored). This value is stored in the variable c.
 
@@ -11,9 +13,16 @@ testImNum=5001:5021; % the index of the test image
 NumOfTestIm=21; % number of test images 
 user_inputs.c = 13;
 
+
 %% Import the image files 
 % imports images and labels into the working directory 
-Import_Images
+images = loadMNISTImages('train-images.idx3-ubyte');
+labels = loadMNISTLabels('train-labels.idx1-ubyte');
+ 
+%test_images = loadMNISTImages('t10k-images.idx3-ubyte');
+%test_labels = loadMNISTLabels('t10k-labels.idx1-ubyte');
+
+
 testIm=images(:,testImNum); % some test image 
 trainSet=images(:,1:trainingSetSize); % training set 
 trainLabels=labels(1:testImNum); % traingin labels 
