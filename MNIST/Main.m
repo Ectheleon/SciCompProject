@@ -42,9 +42,11 @@ end
 %% Measuring success of method 
 
 actualNum=labels(testImNum);
+[m,~]=size(predictedNum); 
+
 % accuracy 
 test=actualNum==predictedNum; % Logical output 
-accMeas=sum(test)/NumOfTestIm % percentage correct 
+accMeas=sum(test)/m % percentage correct 
 
 
 
