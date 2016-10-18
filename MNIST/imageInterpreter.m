@@ -1,4 +1,4 @@
-function [ label ] = imageInterpreter( trainSet, trainLabels, testIm, userInputs)
+function [ label, time_taken ] = imageInterpreter( trainSet, trainLabels, testIm, userInputs)
 %This function is designed to received a 28*28 image of a number written in
 %white on a background of black and figure out what that number is.
 
@@ -33,25 +33,26 @@ function [ label ] = imageInterpreter( trainSet, trainLabels, testIm, userInputs
    %Determine method used, and set up method
     if strcmp(userInputs.method,'intensity')
        [mu,trainFt]=intInsty(trainSet); 
+       
+       %Intensity
+       testIm=testIm-mu; 
+
     else 
        [V,trainFt]=intPCD(trainSet, userInputs.c); % needs edited 
         %An extra input is required for intPCD. I've called this input c for now. 
+        
+       % PCD 
+       testIm=V'*testIm; % change to take acount of multiple images at once 
+       %I don't have the shape of V correct yet.
     end 
 
     % Interpretation 
-
-    % Calculate the feature of the image 
-    if strcmp(method,'intensity') 
-       % Intensity 
-       testIm=testIm-mu; 
-    else 
-       % PCD 
-       testIm=V'*testIm; % change to take acount of multiple images at once 
-        %I don't have the shape of V correct yet.
-    end 
-
+    
+    start_clock = cputime;
+    
     % Now send into knnsearch 
     [IDX,~]=knnsearch(trainFt',testIm','k',userInputs.k); % check correct usage 
+    
     
     % IDX is the index of the k closest images in the training set. 
     % outputs the index of the k nearest neighbours in trainFT. 
@@ -59,5 +60,9 @@ function [ label ] = imageInterpreter( trainSet, trainLabels, testIm, userInputs
     
     label=mode(transpose(trainLabels(IDX))); % take the number that appears the most
     % as the predicted number. 
+    
+    stop_clock = cputime;
+    
+    time_taken = (stop_clock - start_clock)/size(testIm,2);
 end
 
