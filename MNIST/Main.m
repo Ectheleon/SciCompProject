@@ -5,8 +5,10 @@
 user_inputs.method='intensity';  
 user_inputs.k=5; 
 trainingSetSize=200; % number of images in the training set 
+
 %For the PCD method, it must be predefined in advance how many eigenvalues
 %will be used (as opposed to ignored). This value is stored in the variable c.
+
 testImNum=5001:5021; % the index of the test image
 NumOfTestIm=21; % number of test images 
 user_inputs.c = 13;
@@ -27,7 +29,7 @@ trainLabels=labels(1:testImNum); % traingin labels
 
 
 %% Initialisation
-if strcmp(method,'intensity')
+if strcmp(user_inputs.method,'intensity')
    [mu,trainFt]=intInsty(trainSet); 
 else 
    [V,trainFt]=intPCD(trainSet, user_inputs.c); % needs edited 
@@ -35,20 +37,14 @@ else
 end 
 
 %% Interpretation 
-predictedNum=imageInterpreter(trainSet,trainLabels,testIm,user_inputs);
+[predictedNum,time]=imageInterpreter(trainSet,trainLabels,testIm,user_inputs);
 
 %% Measuring success of method 
 
 actualNum=labels(testImNum);
 % accuracy 
 test=actualNum==predictedNum; % Logical output 
-predictedNum
-actualNum
 accMeas=sum(test)/NumOfTestIm % percentage correct 
 
 
-% does the predicted number match the label of the test number
 
-% actual label 
-
-% 
