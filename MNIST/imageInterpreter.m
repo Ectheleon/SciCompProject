@@ -1,4 +1,4 @@
-function [ label, time_taken ] = imageInterpreter( trainSet, trainLabels, testIm, userInputs)
+function [ predictedNum, time_taken ] = imageInterpreter( trainSet, trainLabels, testIm, userInputs)
 %This function is designed to received a 28*28 image of a number written in
 %white on a background of black and figure out what that number is.
 
@@ -57,8 +57,9 @@ function [ label, time_taken ] = imageInterpreter( trainSet, trainLabels, testIm
     % IDX is the index of the k closest images in the training set. 
     % outputs the index of the k nearest neighbours in trainFT. 
     % We now identify the label of the k-nearest neighbours 
+
     
-    label=mode(transpose(trainLabels(IDX))); % take the number that appears the most
+    predictedNum=mode(transpose(trainLabels(IDX))); % take the number that appears the most
     % as the predicted number. 
     
     stop_clock = cputime;
