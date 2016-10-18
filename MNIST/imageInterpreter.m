@@ -1,15 +1,15 @@
 function [ predictedNum, time_taken ] = imageInterpreter( trainSet, trainLabels, testIm, userInputs)
-%This function is designed to received a 28*28 image of a number written in
+%This function is designed to received a p*p image of a number written in
 %white on a background of black and figure out what that number is.
 
-%trainSet refers to a 784*m matrix, where each row refers to an 28*28 image
+%trainSet refers to a (p^2)*m matrix, where each row refers to an p*p image
 %containing a number.
 
 %trainLabels is a 1*m array, where the value of m must match that of
 %trainSet. This vector contains the number values which apply to the images
 %contained in trainSet.
 
-%testIm is a 784*n matrix, where each row refers to a 28*28 image, which
+%testIm is a (p^2)*n matrix, where each row refers to a p*p image, which
 %the function will then read an interpret. 
 
 %The values which this function decides apply to each image in testIm will
@@ -38,7 +38,7 @@ function [ predictedNum, time_taken ] = imageInterpreter( trainSet, trainLabels,
        testIm=testIm-mu; 
 
     else 
-       [V,trainFt]=intPCD(trainSet, userInputs.c); % needs edited 
+       [V,trainFt]=intPCA(trainSet, userInputs.c); % needs edited 
         %An extra input is required for intPCD. I've called this input c for now. 
         
        % PCD 
