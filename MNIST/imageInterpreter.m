@@ -1,10 +1,7 @@
-function [ label ] = imageInterpreter( trainSet, trainLabels, testIm, user_inputs)
+function predictedNum = imageInterpreter( trainSet, trainLabels, testIm, user_inputs)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
-    k = user_inputs.k;
     method = user_inputs.method;
-
-
 
    % Initialisation
     if strcmp(method,'intensity')
@@ -38,25 +35,10 @@ function [ label ] = imageInterpreter( trainSet, trainLabels, testIm, user_input
     % IDX is the index of the k closest images in the training set. 
 
     % outputs the index of the k nearest neighbours in trainFT. 
-    disp(IDX);
     % We now identify the label of the k-nearest neighbours 
     nearestNums=trainLabels(IDX); % need to check how to extract properly 
-    label = nearestNums;
+    predictedNum = mode(nearestNums,2);
     
-    %{
-    predictedNum=mode(nearestNums); % take the number that appears the most
-    % as the predicted number. 
-    actaulNum=labels(testImNum)
-
-    % Measuring success of method 
-
-    % does the predicted number match the label of the test number
-
-    % actual label 
-
-    % 
-    %}
-
-
+   
 end
 
