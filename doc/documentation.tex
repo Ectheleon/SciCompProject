@@ -1,7 +1,7 @@
 \documentclass[10pt]{article}
 
 \title{Image classification} 
-\author{} 
+\author{Jonathan Peters and Scott Marquis} 
 \date{} 
 
 \begin{document} 
@@ -10,10 +10,16 @@
 
 \section{Set up} 
 
+
 \section{User Interface} 
+The user can has control over a number of inputs. They can be changed from within the {\tt Main.m} file.  
 \begin{itemize}
-\item 
-\item world 
+\setlength\itemsep{0 cm}
+\item {\tt userinputs.method} - set to 'intensity' to use intensity of the image as the feature or 'PCA' to use PCA as the feature. 
+\item {\tt userinputs.k} - set the number of nearest neighbours to use in the k-nearest neighbours algorithm.  
+\item {\tt trainingSetSize} - 
+\item NumOfTestIm 
+\item c 
 \end{itemize}
 
 \section{Function} 
@@ -25,5 +31,8 @@
 \subsection{\tt intInsty.m} 
 
 \subsection{\tt intPCA.m}
+
+\section{Examples}
+
 
 \end{document} 
