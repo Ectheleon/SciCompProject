@@ -10,24 +10,16 @@ function [ V , Training_Feature] = intPCD( Training_Set , c)
     cov = Training_Set * transpose(Training_Set);
     
     %identify eigenvalues and eigenvectors of cov matrix
-    [ vecs, vals] = eig(cov);
-    vals = diag(vals);
+    [ vecs, ~] = eig(cov);
     
-    %Find the indices corresponding to the 'c' eigenvalues of largest
-    %magnitude
-    [~, indices] = sort(abs(vals));
-    
-    %update the variable indices to only include these larger eigenvalues.
-    indices = indices(1:c);
-    
-    %Assign to V the eigenvectors corresponding to these larger
-    %eigenvalues.
-    V= vecs(indices, :);
-    
+    %Assign to V the last c eigenvectors, which based on the natural matlab
+    %ordering should correspond to the eigenvalues of greatest magnitude.
+    V= vecs(:, end-c+1:end);
+   
     %Finally, transform the original set 'Training_Set into the small
     %array 'Training_Feature' 
-    Training_Feature = vecs'*Training_Set; 
-    Training_Feature = flipud(Training_Feature);
-    Training_Feature = Training_Feature(indices, :);
+    Training_Feature = V'*Training_Set; 
+    %Training_Feature = flipud(Training_Feature);
+    %Training_Feature = Training_Feature(indices, :);
 end
 
