@@ -17,7 +17,7 @@ user_inputs.c = 13;
 images = loadMNISTImages('train-images.idx3-ubyte');
 labels = loadMNISTLabels('train-labels.idx1-ubyte');
  
-%test_images = loadMNISTImages('t10k-images.idx3-ubyte');
+%jtest_images = loadMNISTImages('t10k-images.idx3-ubyte');
 %test_labels = loadMNISTLabels('t10k-labels.idx1-ubyte');
 
 

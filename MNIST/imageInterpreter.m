@@ -59,7 +59,7 @@ function [ predictedNum, time_taken ] = imageInterpreter( trainSet, trainLabels,
     % We now identify the label of the k-nearest neighbours 
 
     
-    predictedNum=mode(transpose(trainLabels(IDX))); % take the number that appears the most
+    predictedNum=mode(trainLabels(IDX),2); % take the number that appears the most
     % as the predicted number. 
     
     stop_clock = cputime;
