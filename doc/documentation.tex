@@ -1,5 +1,7 @@
 \documentclass[10pt]{article}
 
+\usepackage[margin=0.5in]{geometry}
+
 \title{Image classification} 
 \author{Jonathan Peters and Scott Marquis} 
 \date{} 
@@ -8,29 +10,82 @@
 
 \maketitle
 
-\section{Set up} 
+The code aims to take a test image or set of test images from the MNIST database (see Section \ref{Setup}) as an input and classify them. The images are of handwritten single digit numbers and are classified by the number that is in the image. 
 
+\section{Setup} \label{Setup}
+The MNIST database downloaded from yann.lecun.com/exdb/mnist is required. Download, unzip and place the files into the MNIST folder. Open the file {\tt Main.m} and hit run. There will be a number of questions which will be asked. These allow the user to specify certain inputs. If the user wants further control over inputs, they can be altered in {\tt Main.m} in the user inputs section (see Section \ref{User} of this document). 
 
-\section{User Interface} 
-The user can has control over a number of inputs. They can be changed from within the {\tt Main.m} file.  
+\section{Basic Method}
+{\bf Initialisation} \\
+This code imports a training set of images which are the columns matrix.  
+
+\subsection{Intensity} 
+
+\subsection{Principal component analysis (PCA)}
+
+\section{User Interface}\label{User}
+The user can has control over a number of inputs. They can be changed within {\tt Main.m}.  
 \begin{itemize}
 \setlength\itemsep{0 cm}
 \item {\tt userinputs.method} - set to 'intensity' to use intensity of the image as the feature or 'PCA' to use PCA as the feature. 
 \item {\tt userinputs.k} - set the number of nearest neighbours to use in the k-nearest neighbours algorithm.  
-\item {\tt trainingSetSize} - set the size of the training set
-\item {\tt NumOfTestIm} - the number of test images to use   
-\item {\tt userc 
+\item {\tt trainingSetSize} - the size of the training set.
+\item {\tt NumOfTestIm} - the number of test images (this should be changed at the same time as changing which test image/images are being loaded.
+\item {\tt userinputs.c} - the number of eigenvectors to be used in the PCA method. 
 \end{itemize}
 
-\section{Function} 
+\section{m-files} 
 
 \subsection{\tt Main.m} 
+User inputs are set in the first section of this file. The file then loads the full set of training and test images provided by MNIST. These full sets are then restricted in size according to the user inputs. The file then calls either {\tt intInsty.m} or {\tt intPCA} to find the training features and other relevant parameters for each method. Next, {\tt imageInterpreter.m} is called; it outputs the predicted label of the test image. This is then sent to {\tt errcheck.m} to compare with the true number.  
+
 
 \subsection{\tt imageInterpretor.m} 
+This function determines the features (corresponding to the user defined method) of the test images. It then calls {\tt knnsearch} to find the $k$-nearest neighbours of the features. The mode of these is then used as the predicted label. \\ 
+
+{\bf Inputs:} 
+\begin{itemize} 
+\item {\tt trainSet} - a ($p^2$ x $m$) matrix, where each row refers to a ($p$ x $p$) image containing a number.
+\item {\tt trainLabels} - a ($1$ x $m$) array, where the value of m must match that of trainSet. This vector contains the number values which apply to the images contained in {\tt trainSet}.
+\item {\tt testIm} - is a ($p^2$ x $n$) matrix, where each row refers to a ($p$ x $p$) image, which the function will then read an interpret.
+\item {\tt userInputs} - a structure containing the user inputs defined in {\tt Main.m} 
+\end{itemize} 
+
+{\bf Outputs:} 
+\begin{itemize} 
+\item {\tt predictedNum} - the label that the input images is predicted to have by the method. 
+\item {\tt time\_taken} - the time taken to find the k-nearest neighbours of the test image and then calculate the predicted label. 
+\end{itemize}
 
 \subsection{\tt intInsty.m} 
+This function calculates the mean image in the set of training images. It then subtracts this mean from each of the other images in the training set to define the features for this method. \\ 
+
+{\bf Inputs:} 
+\begin{itemize}
+\item {\tt training\_set} - the training set of images. 
+\end{itemize}
+
+{\bf Outputs:}
+\begin{itemize}
+\item {\tt mu} - the mean image of the training set.
+\item {\tt trainFT} - the features of the training set. 
+\end{itemize}
 
 \subsection{\tt intPCA.m}
+This function calculates the eigenvectors of the covariance matrix of the training set and the training features. The training features are calculated by projecting each image in the training set onto each of the eigenvectors. \\
+ 
+{\bf Inputs:} 
+\begin{itemize}
+\item {\tt training\_set} - the training set of images.
+\item {\tt c} - the number of eigenvectors/features
+\end{itemize}
+
+{\bf Outputs:}
+\begin{itemize}
+\item {\tt V} - matrix of eigenvectors 
+\item {\tt Training\_Feature} - the features of the training set. 
+\end{itemize}
+
 
 \section{Examples}
 

@@ -102,7 +102,9 @@ end
 
 %% Measuring success of method 
 
+
 performance = interpreterPerformance(predictedNum, testAns);
+
 
 disp(['Predictions were made for the ' num2str(testSize) ' images.']);
 disp(['They were found with ' num2str(performance) ' accuracy.']);
