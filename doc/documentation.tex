@@ -16,12 +16,10 @@ The code aims to take a test image or set of test images from the MNIST database
 The MNIST database downloaded from yann.lecun.com/exdb/mnist is required. Download, unzip and place the files into the MNIST folder. Open the file {\tt Main.m} and hit run. There will be a number of questions which will be asked. These allow the user to specify certain inputs. If the user wants further control over inputs, they can be altered in {\tt Main.m} in the user inputs section (see Section \ref{User} of this document). 
 
 \section{Basic Method}
-{\bf Initialisation} \\
-This code imports a training set of images which are the columns matrix.  
+This code imports a training set of images which are the columns matrix. Features of the images are then extracted from this matrix. These features can take different forms; this code has two options for features: intensity and principal component analysis. Using intensity as a feature simply compares all pixels in the images. Principal component analysis first calculates the eigenvectors of the covariance matrix of the matrix containing the training set. Some number of eigenvectors with the largest corresponding eigenvalues are then chosen. Each image is then mapped onto these eigenvectors which gives the principal components. The matrix containing the principal components is then used as the feature matrix for the images. The differences in the images are then calculated as difference in these principal components.  \\ 
 
-\subsection{Intensity} 
+Once the features of the training set have been found, a set of test images are imported. These test images are arranged into vector form. The features of the test images are then calculated. These are then compared to the training set using the k-nearest neighbours algorithm. This calculates the k closest training images to the test image(s) in the sense that the norm of the features is minimised. The labels of these k-nearest images are compared and the mode label is used as the predicted label for the test image(s).
 
-\subsection{Principal component analysis (PCA)}
 
 \section{User Interface}\label{User}
 The user can has control over a number of inputs. They can be changed within {\tt Main.m}.  
